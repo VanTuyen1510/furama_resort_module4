@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <h3><a th:href="@{/customer/create}">Create</a></h3>
+    <!--Integer customerId, String name, Date birthday, Integer gender, String card, String phone, String email, String address, CustomerType customerType, Set<Contract> contractSet-->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Card</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Customer Type</th>
+            <th scope="col">Update</th>
+            <th scope="col">Status</th>
+
+        </tr>
+        </thead>
+        <tr th:each="customer : ${customers}" th:object="${customer}">
+            <td th:text=" 'KH - ' + *{customerId}"></td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{#dates.format(birthday,'dd/MM/yyyy')}"></td>
+            <td th:switch="*{gender}">
+                <p th:case="0">
+                    Nữ
+                </p>
+                <p th:case="1">
+                    Nam
+                </p>
+                <p th:case="*">
+                    Other
+                </p>
+            </td>
+            <td th:text="*{Card}"></td>
+            <td th:text="*{Phone}"></td>
+            <td th:text="*{Email}"></td>
+            <td th:text="*{Address}"></td>
+            <td th:text="*{customerType.name}"></td>
+            <td>
+                <a th:href="@{/customer/update(customerId=*{customerId})}">Update</a>
+            </td>
+            <td>
+                <a th:href="@{/customer/delete(customerId=*{customerId})}">Delete</a>
+            </td>
+            <td th:text="*{status}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

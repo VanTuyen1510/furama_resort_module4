@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a{
+            text-decoration: none;
+        }
+        .active{
+            font-weight: bold;
+            text-decoration: underline;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<!--<div th:insert="~{ furama/display/header :: header}"></div>-->
+
+<a th:href="@{/employee/create}">Create</a>
+Name : <input type="text" id="name" onclick="searchByName()">
+<br>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Birthday</th>
+        <th>Card</th>
+        <th>Salary</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Position</th>
+        <th>Division</th>
+        <th>Education Degree</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>Status</th>
+    </tr>
+    <tbody>
+    <tr th:each="e : ${employees}" th:object="${e}">
+        <td th:text="*{employeeId}"></td>
+        <td th:text="*{name}"></td>
+        <td th:text="*{#dates.format(birthday,'dd/MM/yyyy')}"></td>
+        <td th:text="*{card}"></td>
+        <td th:text="*{salary}"></td>
+        <td th:text="*{phone}"></td>
+        <td th:text="*{email}"></td>
+        <td th:text="*{address}"></td>
+        <td th:text="*{position.name}"></td>
+        <td th:text="*{division.name}"></td>
+        <td th:text="*{educationDegree.name}"></td>
+        <td><a th:href="@{/employee/update(employeeId=*{employeeId})}">Update</a></td>
+        <td>
+            <a th:href="@{/employee/delete(employeeId=*{employeeId})}" >Delete</a>
+        </td>
+        <td th:text="*{status}"></td>
+    </tr>
+    </tbody>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function searchByName(){
+        let employeeName = $('#name').val();
+        $.ajax({
+            url:"http/localhost:8080/api/v1/employee/search",
+            data :{
+                name : employeeName
+            },
+            type:"get",
+            dataType:"json",
+            success:function (res){
+                let result = "";
+                for (let i = 0; i < res.length; i++) {
+                    result = "<tr>" +
+                        "<td>" + res[i].employeeId  +"</td>" +
+                        "<td>"+ res[i].name  +"</td>" +
+                        "<td>"+ res[i].birthday +"</td>" +
+                        "<td>"+ res[i].card +"</td>" +
+                        "<td>"+ res[i].salary + "</td>" +
+                        "<td>"+ res[i].phone + "</td>" +
+                        "<td>"+ res[i].email + "</td>" +
+                        "<td>"+ res[i].address + "</td>" +
+                        "<td>"+ res[i].position.name +"</td>" +
+                        "<td>"+ res[i].division.name + "</td>" +
+                        "<td>"+ res[i].educationDegree.name + "</td>" +
+                        "<td><a href='employee/update?employeeId =" + res[i].employeeId  +"'>Update</a></td>" +
+                        "<td><a href='employee/delete?employeeId =" + res[i].employeeId  +"'>Delete</a></td>" +
+                        "</tr>"
+                }
+            }
+        })
+    }
+</script>
+<div th:if="${employees.totalPages > 1}">
+    <a th:each="pageNumber: ${pageNumbers}"
+       th:href="@{/employee/listPaging(page=${pageNumber}, size=${employees.size})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber == employees.number + 1} ? active">
+    </a>
+</div>
+</body>
+</html>

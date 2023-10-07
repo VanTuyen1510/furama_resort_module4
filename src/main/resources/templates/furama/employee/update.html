@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form th:action="@{/employee/update}" method="post" th:object="${employee}">
+      <!--/  private int employeeId;
+    private String name;
+    private Date birthday;
+    private String card;
+    private Double salary;
+    private String phone;
+    private String email;
+    private String address;
+    Position position, Division division, EducationDegree educationDegree, Set<Contract> contracts, User user
+    -->
+      <table>
+          <tr>
+              <td>Id</td>
+              <td><input type="hidden" th:field="*{employeeId}"></td>
+          </tr>
+          <tr>
+              <td>Name</td>
+              <td><input type="text" th:field="*{name}"></td>
+          </tr>
+          <tr>
+              <td>Birthday</td>
+              <td><input type="date" th:field="*{birthday}"></td>
+          </tr>
+          <tr>
+              <td>Card</td>
+              <td><input type="text" th:field="*{card}"></td>
+          </tr>
+          <tr>
+              <td>Salary</td>
+              <td><input type="text" th:field="*{salary}"></td>
+          </tr>
+          <tr>
+              <td>Phone</td>
+              <td><input type="text" th:field="*{phone}"></td>
+          </tr>
+          <tr>
+              <td>Email</td>
+              <td><input type="text" th:field="*{email}"></td>
+          </tr>
+          <tr>
+              <td>Address</td>
+              <td><input type="text" th:field="*{address}"></td>
+          </tr>
+          <tr>
+              <td>Position</td>
+              <td>
+                  <select th:field ="*{position}">
+                      <!--/*@thymesVar id="positionName" type=""*/-->
+                      <option th:each="p : ${position}" th:value="${p.positionId}" th:text="${p.name}"></option>
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <td>Division</td>
+              <td>
+                  <select th:field="*{division}">
+                      <option th:each="d : ${division}" th:value="${d.divisionId}" th:text="${d.name}"></option>
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <td>Education Degree</td>
+              <td>
+                  <select th:field = "*{educationDegree}">
+                      <option th:each="ed : ${educationDegree}" th:value="${ed.educationDegreeId}" th:text="${ed.name}"></option>
+                  </select>
+              </td>
+          </tr>
+      </table>
+      <input type="submit" th:value="Update">
+  </form>
+</body>
+</html>

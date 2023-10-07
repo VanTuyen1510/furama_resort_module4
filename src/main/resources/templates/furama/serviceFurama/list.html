@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+<table>
+<!--
+Integer serviceId, String name, Integer area, Double cost, Integer maxPeople, String room, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloors, Set<Contract> contractSet, ServiceType serviceType, RentType rentType
+-->
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Area</th>
+        <th>Cost</th>
+        <th>Max People</th>
+        <th>Room</th>
+        <th>Description Other Convenience</th>
+        <th>Pool Area</th>
+        <th>Number Of Floors</th>
+        <th>Service Type</th>
+        <th>Rent Type</th>
+    </tr>
+    <tr th:each="s : ${services} " th:object="${s}">
+        <td th:text="*{serviceId}"></td>
+        <td th:text="*{name}"></td>
+        <td th:text="*{area}"></td>
+        <td th:text="*{cost}"></td>
+        <td th:text="*{maxPeople}"></td>
+        <td th:text="*{room}"></td>
+        <td th:text="*{descriptionOtherConvenience}"></td>
+        <td th:text="*{poolArea}"></td>
+        <td th:text="*{numberOfFloors}"></td>
+        <td th:text="*{serviceType.name}"></td>
+        <td th:text="*{rentType.name}"></td>
+    </tr>
+</table>
+</body>
+</html>

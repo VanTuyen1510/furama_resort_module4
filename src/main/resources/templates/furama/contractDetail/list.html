@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Quantiy</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="cd : ${contractDetails} " th:object="${cd}">
+            <td th:text="*{contractDetailId}"></td>
+            <td th:text="*{quantity}"></td>
+            <td><a th:href="@{/contractDetail/delete(contractDetailId=*{contractDetailId})}">Delete</a> </td>
+        </tr>
+    </table>
+</body>
+</html>
